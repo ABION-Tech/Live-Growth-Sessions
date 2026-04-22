@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — This Book Will Change Your Life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark-bg: #0a0a0a;
+    --gold: #d4b07a;
+    --gold-light: #e6c799;
+    --gold-dark: #b8965a;
+    --blue: #4a90e2;
+    --blue-mid: #3a7bc8;
+    --cream: #f7f3ec;
+    --muted: #b8b8b8;
+    --border: rgba(212, 176, 122, 0.25);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark-bg); color: var(--cream);
+    font-family: 'DM Sans', sans-serif; font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background:
+      radial-gradient(circle at 10% 30%, rgba(212,176,122,0.07) 0%, transparent 50%),
+      radial-gradient(circle at 90% 70%, rgba(212,176,122,0.04) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(74,144,226,0.03) 0%, transparent 50%);
+    z-index: -1;
+    animation: bgMove 20s ease-in-out infinite;
+  }
+
+  @keyframes bgMove {
+    0%,100% { transform: translate(0,0); }
+    33% { transform: translate(-15px,-15px); }
+    66% { transform: translate(15px,-8px); }
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10,10,10,0.85); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border); transition: all 0.3s ease;
+  }
+  nav.scrolled { padding: 12px 48px; background: rgba(10,10,10,0.97); }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 600; letter-spacing: 0.04em;
+    color: var(--cream); text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(247,243,236,0.5); text-decoration: none; transition: color 0.3s ease;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--blue); text-decoration: none;
+    border: 1px solid var(--blue-mid); padding: 8px 18px;
+    transition: all 0.3s ease; position: relative; overflow: hidden;
+  }
+  .nav-cta::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    width: 0; height: 0; background: var(--blue); border-radius: 50%;
+    transform: translate(-50%,-50%);
+    transition: width 0.5s ease, height 0.5s ease;
+  }
+  .nav-cta:hover { color: var(--dark-bg); border-color: var(--blue); }
+  .nav-cta:hover::before { width: 300px; height: 300px; }
+  .nav-cta span { position: relative; z-index: 1; }
+
+  /* PAGE HERO */
+  .page-hero {
+    padding: 160px 80px 80px;
+    border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .page-hero::after {
+    content: 'HELLO';
+    position: absolute; right: -20px; bottom: -50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 220px; font-weight: 600; line-height: 1;
+    color: rgba(212,176,122,0.04); pointer-events: none;
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+    animation: fadeInUp 0.8s ease both;
+  }
+  .hero-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 8vw, 110px); font-weight: 300; line-height: 1.05;
+    color: var(--cream); animation: fadeInUp 0.8s ease 0.15s both;
+  }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 15px; line-height: 1.8; color: var(--muted);
+    max-width: 520px; margin-top: 24px; animation: fadeInUp 0.8s ease 0.3s both;
+  }
+
+  /* MAIN CONTACT GRID */
+  .contact-section {
+    padding: 100px 80px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    max-width: 1300px; margin: 0 auto;
+    position: relative;
+  }
+
+  /* LEFT — CONTACT TYPES */
+  .contact-list {
+    display: flex; flex-direction: column; gap: 0;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .contact-list::before {
+    content: '';
+    position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+    background: linear-gradient(45deg, var(--gold), transparent, var(--gold));
+    opacity: 0; z-index: -1; transition: opacity 0.3s ease;
+  }
+  .contact-list:hover::before {
+    opacity: 0.2;
+    animation: borderRotate 3s linear infinite;
+  }
+
+  .contact-item {
+    padding: 32px 36px;
+    border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: 48px 1fr;
+    gap: 20px; align-items: start;
+    transition: all 0.3s ease; position: relative; overflow: hidden;
+  }
+  .contact-item:last-child { border-bottom: none; }
+  .contact-item::after {
+    content: '';
+    position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212,176,122,0.05), transparent);
+    transition: left 0.6s ease;
+  }
+  .contact-item:hover { background: rgba(212,176,122,0.03); }
+  .contact-item:hover::after { left: 100%; }
+
+  .contact-icon {
+    width: 48px; height: 48px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: all 0.3s ease;
+  }
+  .contact-item:hover .contact-icon {
+    border-color: var(--gold); background: rgba(212,176,122,0.08);
+  }
+  .contact-icon svg { color: var(--gold); }
+
+  .contact-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 600; color: var(--cream); margin-bottom: 8px; line-height: 1.2;
+  }
+  .contact-desc {
+    font-size: 13px; line-height: 1.75; color: var(--muted); margin-bottom: 12px;
+  }
+  .contact-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em;
+    color: var(--gold); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.3s ease;
+  }
+  .contact-link:hover { color: var(--gold-light); transform: translateX(4px); }
+  .contact-link::after { content: '→'; }
+  .contact-sub-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em;
+    color: rgba(247,243,236,0.3); text-decoration: none;
+    display: block; margin-top: 6px;
+    transition: color 0.3s ease;
+  }
+  .contact-sub-link:hover { color: var(--gold); }
+
+  /* RIGHT — FORM + SOCIALS */
+  .contact-right { display: flex; flex-direction: column; gap: 40px; }
+
+  .contact-form-box {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    border: 1px solid var(--border); padding: 40px;
+    position: relative; overflow: hidden;
+  }
+  .contact-form-box::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300; color: var(--cream); margin-bottom: 8px;
+  }
+  .form-title em { font-style: italic; color: var(--gold); }
+  .form-sub {
+    font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 28px;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .form-input, .form-select, .form-textarea {
+    padding: 14px 18px;
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, #111 0%, #0a0a0a 100%);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    outline: none; width: 100%; transition: all 0.3s ease;
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);
+    box-shadow: 0 0 0 3px rgba(212,176,122,0.08);
+  }
+  .form-select { appearance: none; cursor: pointer; }
+  .form-textarea { resize: vertical; min-height: 120px; }
+
+  .form-submit {
+    background: var(--gold); color: var(--dark-bg);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 16px 32px; border: none; cursor: pointer;
+    width: 100%; transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .form-submit::before {
+    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transition: left 0.7s ease;
+  }
+  .form-submit:hover::before { left: 100%; }
+  .form-submit:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,176,122,0.3);
+  }
+  .form-note {
+    font-size: 11px; color: rgba(247,243,236,0.3); text-align: center; margin-top: 12px;
+    font-family: 'DM Mono', monospace; letter-spacing: 0.06em; line-height: 1.6;
+  }
+
+  /* SOCIALS BOX */
+  .socials-box {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    border: 1px solid var(--border); padding: 36px 40px;
+  }
+  .socials-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 24px;
+  }
+  .socials-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .social-card {
+    border: 1px solid var(--border); padding: 16px 20px;
+    text-decoration: none; display: flex; align-items: center; gap: 14px;
+    transition: all 0.3s ease; position: relative; overflow: hidden;
+  }
+  .social-card::before {
+    content: '';
+    position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212,176,122,0.07), transparent);
+    transition: left 0.6s ease;
+  }
+  .social-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+  .social-card:hover::before { left: 100%; }
+  .social-icon {
+    width: 36px; height: 36px; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: var(--gold); transition: all 0.3s ease;
+  }
+  .social-card:hover .social-icon { border-color: var(--gold); background: rgba(212,176,122,0.1); }
+  .social-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px; font-weight: 600; color: var(--cream); display: block;
+  }
+  .social-handle {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.12em; color: var(--muted);
+  }
+
+  /* RESPONSE TIMES */
+  .response-section {
+    padding: 60px 80px;
+    background: linear-gradient(135deg, #0e0e0e 0%, #1a1a1a 100%);
+    border-top: 1px solid var(--border);
+    position: relative;
+  }
+  .response-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--border); border: 1px solid var(--border);
+  }
+  .response-card {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    padding: 32px 28px; transition: all 0.3s ease;
+  }
+  .response-card:hover {
+    background: linear-gradient(135deg, #242424 0%, #181818 100%);
+    transform: translateY(-4px);
+  }
+  .response-time {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 600; color: var(--gold); margin-bottom: 8px; line-height: 1;
+  }
+  .response-type {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 600; color: var(--cream); margin-bottom: 6px;
+  }
+  .response-desc {
+    font-size: 12px; line-height: 1.7; color: var(--muted);
+  }
+
+  /* CLOSING STRIPE */
+  .closing-stripe {
+    padding: 80px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .closing-stripe::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(45deg, transparent 48%, rgba(10,10,10,0.08) 50%, transparent 52%),
+      radial-gradient(circle, rgba(10,10,10,0.06) 1px, transparent 1px);
+    background-size: 18px 18px, 28px 28px;
+  }
+  .closing-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 2.5vw, 36px); font-weight: 300; font-style: italic;
+    color: var(--dark-bg); line-height: 1.5; max-width: 680px; margin: 0 auto 16px;
+    position: relative; z-index: 1;
+  }
+  .closing-attr {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(10,10,10,0.5); position: relative; z-index: 1;
+  }
+
+  /* FOOTER */
+  footer {
+    background: linear-gradient(135deg, #0a0a0a 0%, #000 100%);
+    padding: 60px 80px;
+    border-top: 1px solid rgba(212,176,122,0.2);
+    position: relative; overflow: hidden;
+  }
+  footer::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(212,176,122,0.02) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(74,144,226,0.02) 0%, transparent 50%);
+  }
+  .footer-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 48px; position: relative; z-index: 1;
+  }
+  .footer-brand { max-width: 320px; }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 600; color: var(--cream); text-decoration: none;
+    display: inline-block; margin-bottom: 16px;
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-tagline { font-size: 13px; line-height: 1.7; color: rgba(247,243,236,0.4); }
+  .footer-socials { display: flex; gap: 12px; margin-top: 24px; }
+  .footer-social-link {
+    width: 36px; height: 36px; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; color: var(--muted); transition: all 0.3s ease;
+  }
+  .footer-social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(212,176,122,0.08); }
+  .footer-cols { display: flex; gap: 64px; }
+  .footer-col-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+  }
+  .footer-col-links { display: flex; flex-direction: column; gap: 12px; }
+  .footer-col-links a {
+    font-size: 13px; color: rgba(247,243,236,0.45); text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .footer-col-links a:hover { color: var(--gold); transform: translateX(4px); }
+  .footer-bottom {
+    border-top: 1px solid var(--border); padding-top: 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative; z-index: 1;
+  }
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; color: rgba(247,243,236,0.2); letter-spacing: 0.08em;
+  }
+  .footer-bottom-links { display: flex; gap: 24px; }
+  .footer-bottom-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(247,243,236,0.3); text-decoration: none; transition: color 0.3s ease;
+  }
+  .footer-bottom-links a:hover { color: var(--gold); }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes borderRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .page-hero { padding: 120px 24px 60px; }
+    .contact-section { grid-template-columns: 1fr; padding: 60px 24px; gap: 48px; }
+    .form-row { grid-template-columns: 1fr; }
+    .response-section { padding: 60px 24px; }
+    .response-inner { grid-template-columns: 1fr; }
+    .socials-grid { grid-template-columns: 1fr; }
+    .closing-stripe { padding: 60px 24px; }
+    footer { padding: 48px 24px; }
+    .footer-top { flex-direction: column; gap: 48px; }
+    .footer-cols { flex-direction: column; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+  }
+
+
+   /* ── FOOTER ── */
+  footer {
+    background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%);
+    padding: 60px 80px;
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    border-top: 1px solid rgba(212, 176, 122, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 30% 30%, rgba(212, 176, 122, 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(74, 144, 226, 0.02) 0%, transparent 50%);
+    z-index: 0;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; 
+    font-weight: 600;
+    color: var(--cream); 
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-logo span { 
+    color: var(--gold);
+    position: relative;
+  }
+
+  .footer-logo span::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .footer-logo:hover span::after {
+    transform: scaleX(1);
+  }
+
+  .footer-links {
+    display: flex; 
+    gap: 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; 
+    letter-spacing: 0.14em; 
+    text-transform: uppercase;
+    color: rgba(247, 243, 236, 0.4); 
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .footer-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+
+  .footer-links a:hover { 
+    color: var(--gold);
+  }
+
+  .footer-links a:hover::after {
+    width: 100%;
+  }
+
+  .footer-copy {
+    font-size: 11px; 
+    color: rgba(247, 243, 236, 0.25);
+    font-family: 'DM Mono', monospace;
+    position: relative;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">Live Growth <span>Sessions</span></a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="buy.html">Get the Book</a>
+    <a href="contact.html" class="active">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-tag">Get In Touch</div>
+  <h1 class="hero-title">We want to<br>hear <em>from you.</em></h1>
+  <p class="hero-sub">We are a small, intentional team. Every message is read. Whether you are buying the book, joining the community, or exploring something bigger — reach out.</p>
+</section>
+
+<!-- CONTACT GRID -->
+<section class="contact-section">
+
+  <!-- LEFT: CONTACT TYPES -->
+  <div>
+    <div style="margin-bottom: 32px;">
+      <span style="font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);">How Can We Help?</span>
+    </div>
+    <div class="contact-list">
+
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Community & Membership</div>
+          <div class="contact-title">Join Live Growth Sessions</div>
+          <p class="contact-desc">Questions about membership, purchase confirmation, session access, or your welcome package.</p>
+          <a href="mailto:livegrowthsession@gmail.com" class="contact-link">livegrowthsession@gmail.com</a>
+          <span class="contact-sub-link">Response within 72 hours</span>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Book Orders</div>
+          <div class="contact-title">Physical Copies</div>
+          <p class="contact-desc">For hard copy purchases, delivery enquiries, and availability — contact Ayo directly.</p>
+          <a href="tel:08052095541" class="contact-link">Call / WhatsApp Ayo: 08052095541</a>
+          <a href="https://selar.com/thisbookwillchangeyourlife" target="_blank" class="contact-sub-link">Digital copy → selar.com/thisbookwillchangeyourlife</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Bulk & Corporate</div>
+          <div class="contact-title">10+ Copies</div>
+          <p class="contact-desc">For organisations, companies, schools, churches, and book clubs. Bulk pricing and facilitation guides available.</p>
+          <a href="mailto:livegrowthsession@gmail.com?subject=Bulk%20Order%20Enquiry" class="contact-link">Email — Bulk Order Enquiry</a>
+          <span class="contact-sub-link">Response within 5 working days</span>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Partnerships</div>
+          <div class="contact-title">Let's Build Together</div>
+          <p class="contact-desc">Co-branded sessions, community adoption, speaking engagements, or curriculum integration.</p>
+          <a href="mailto:livegrowthsession@gmail.com?subject=Partnership%20Enquiry" class="contact-link">Email — Partnership Enquiry</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M6 8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M18 8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M9 9l-2 3"/><path d="M15 9l2 3"/><path d="M12 6v3"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Press & Speaking</div>
+          <div class="contact-title">Media & Speaking Enquiries</div>
+          <p class="contact-desc">Interviews, review copies, editorial features, and keynote invitations for Oyewole Joledo on leadership, wisdom, and youth development.</p>
+          <a href="mailto:livegrowthsession@gmail.com?subject=Press%20Enquiry" class="contact-link">Email — Press / Media</a>
+          <a href="mailto:livegrowthsession@gmail.com?subject=Speaking%20Enquiry" class="contact-sub-link">Speaking enquiry →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT: FORM + SOCIALS -->
+  <div class="contact-right">
+
+    <div class="contact-form-box">
+      <h2 class="form-title">Send us a <em>message.</em></h2>
+      <p class="form-sub">Not sure which category fits? Just say hello. We'll make sure it gets to the right person.</p>
+      <div class="form-group">
+        <div class="form-row">
+          <input class="form-input" type="text" placeholder="First name">
+          <input class="form-input" type="text" placeholder="Last name">
+        </div>
+        <input class="form-input" type="email" placeholder="Email address">
+        <select class="form-select">
+          <option value="" disabled selected>What's this about?</option>
+          <option>Community & Membership</option>
+          <option>Physical Book Order</option>
+          <option>Bulk / Corporate Order</option>
+          <option>Partnership Enquiry</option>
+          <option>Press / Media</option>
+          <option>Speaking Enquiry</option>
+          <option>Something else</option>
+        </select>
+        <textarea class="form-textarea" placeholder="Your message..."></textarea>
+        <button class="form-submit">Send Message →</button>
+        <div class="form-note">
+          We read every message. You'll hear back within the response window above.<br>
+          Or email us directly: <a href="mailto:livegrowthsession@gmail.com" style="color: var(--gold);">livegrowthsession@gmail.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="socials-box">
+      <div class="socials-title">Find Us Online</div>
+      <div class="socials-grid">
+        <a href="#" class="social-card">
+          <div class="social-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div>
+            <span class="social-name">Instagram</span>
+            <span class="social-handle">@livegrowthsessions</span>
+          </div>
+        </a>
+        <a href="#" class="social-card">
+          <div class="social-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </div>
+          <div>
+            <span class="social-name">Twitter / X</span>
+            <span class="social-handle">@livegrowthsessions</span>
+          </div>
+        </a>
+        <a href="#" class="social-card">
+          <div class="social-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </div>
+          <div>
+            <span class="social-name">LinkedIn</span>
+            <span class="social-handle">Live Growth Sessions</span>
+          </div>
+        </a>
+        <a href="mailto:livegrowthsession@gmail.com" class="social-card">
+          <div class="social-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <span class="social-name">Email</span>
+            <span class="social-handle">livegrowthsession@gmail.com</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RESPONSE TIMES -->
+<section class="response-section">
+  <div class="response-inner">
+    <div class="response-card">
+      <div class="response-time">72hrs</div>
+      <div class="response-type">Community & Membership</div>
+      <p class="response-desc">Purchase confirmation, session access, welcome packages, and membership questions.</p>
+    </div>
+    <div class="response-card">
+      <div class="response-time">5 days</div>
+      <div class="response-type">All Other Enquiries</div>
+      <p class="response-desc">Bulk orders, partnerships, press, media, speaking invitations, and general contact.</p>
+    </div>
+    <div class="response-card">
+      <div class="response-time">Direct</div>
+      <div class="response-type">Physical Book Orders</div>
+      <p class="response-desc">Call or WhatsApp Ayo directly on 08052095541 for the fastest response on hard copies.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING STRIPE -->
+<section class="closing-stripe">
+  <p class="closing-quote">"The book is a call to do." — We look forward to hearing from you.</p>
+  <div class="closing-attr">Live Growth Sessions — livegrowthsession@gmail.com</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <!-- <div class="footer-top">
+    
+    <div class="footer-cols">
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <div class="footer-col-links">
+          <a href="about.html">About the Book</a>
+          <a href="about.html">About the Author</a>
+          <a href="about.html">Live Growth Sessions</a>
+          <a href="buy.html">Get the Book</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Get the Book</div>
+        <div class="footer-col-links">
+          <a href="https://selar.com/thisbookwillchangeyourlife" target="_blank">Digital / E-book</a>
+          <a href="tel:08052095541">Physical Copy — Ayo</a>
+          <a href="mailto:livegrowthsession@gmail.com?subject=Bulk%20Order%20Enquiry">Bulk Orders (10+)</a>
+          <a href="mailto:livegrowthsession@gmail.com?subject=Partnership%20Enquiry">Partnerships</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-col-links">
+          <a href="mailto:livegrowthsession@gmail.com">livegrowthsession@gmail.com</a>
+          <a href="tel:08052095541">Ayo: 08052095541</a>
+          <a href="mailto:livegrowthsession@gmail.com?subject=Press%20Enquiry">Press & Media</a>
+          <a href="mailto:livegrowthsession@gmail.com?subject=Speaking%20Enquiry">Speaking Enquiries</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Live Growth Sessions. All rights reserved.</div>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div> -->
+
+  <div class="footer-brand">
+      <a href="index.html" class="footer-logo">Live Growth <span>Sessions</span></a>
+      <p class="footer-tagline">A community built around the conviction that wisdom, practically applied, changes everything. One chapter. One month. One life at a time.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social-link" title="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" class="footer-social-link" title="Twitter / X">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" class="footer-social-link" title="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="mailto:livegrowthsession@gmail.com" class="footer-social-link" title="Email">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+      </div>
+    </div>
+   
+   
+    <div class="footer-links">
+    <a href="about.html">About</a>
+    <!-- <a href="#">Sessions</a> -->
+    <a href="buy.html">Buy</a>
+    <!-- <a href="#">Community</a> -->
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Live Growth Sessions. All rights reserved.</div>
+
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.contact-item, .response-card, .social-card').forEach(el => {
+    el.style.opacity = '0';
+    observer.observe(el);
+  });
+
+  // Form submission placeholder
+  document.querySelector('.form-submit').addEventListener('click', () => {
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#2a6e2a';
+    btn.style.borderColor = '#2a6e2a';
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.style.background = '';
+      btn.style.borderColor = '';
+    }, 3000);
+  });
+</script>
+</body>
+</html>

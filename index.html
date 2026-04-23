@@ -1703,6 +1703,63 @@
   border: 5px solid var(--dark-bg);
 }
 
+
+.hero-image-card {
+  width: 100%;
+  height: 100%;
+  max-width: none; /* remove restriction */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.hero-image-card img {
+  width: 100%;
+max-width: 500px; /* controls size on large screens */
+  height: auto;
+  border-radius: 16px;
+  object-fit: contain;
+}
+
+.hero-image-card img {
+  width: 100%;
+  max-width: 600px;
+  transform: scale(1.1);
+}
+.hero-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .hero-right {
+    margin-top: 40px;
+  }
+
+  .hero-image-card img {
+    max-width: 90%;
+  }
+}
+
+.hero-image-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-image-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+.hero-right-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
@@ -1900,7 +1957,7 @@
 <!-- NAV -->
 <nav id="navbar">
   <a href="#" class="nav-logo">Live Growth <span>Sessions</span></a>
-  <a href="#join" class="nav-cta"><span>Join the Community</span></a>
+  <a href="contact.html" class="nav-cta"><span>Join the Community</span></a>
 </nav>
 
 <!-- HERO -->
@@ -1917,11 +1974,11 @@
       and holds you accountable to the person you are becoming.
     </p>
     <div class="hero-actions fade-up">
-      <a href="#join" class="btn-primary">Join the Community</a>
+      <a href="contact.html" class="btn-primary">Join the Community</a>
       <a href="https://selar.com/thisbookwillchangeyourlife" target="_blank" class="btn-ghost">Get the Book</a>
     </div>
   </div>
-  <div class="hero-right">
+  <!-- <div class="hero-right">
     <div class="hero-right-inner">
       <div class="hero-quote-card">
         <span class="hero-quote-mark">"</span>
@@ -1931,7 +1988,15 @@
         <span class="hero-quote-attr">— Oyewole Joledo</span>
       </div>
     </div>
+  </div> -->
+<div class="hero-right">
+  <div class="hero-right-inner">
+    <div class="hero-image-card">
+      <img src="assets/images/Pro.jpeg" alt="Live Growth Session Flier" />
+    </div>
   </div>
+</div>
+
 </section>
 
 <!-- BOOK SECTION -->
@@ -2286,7 +2351,7 @@ Sessions are held monthly. The exact date, time, and location will be communicat
     "Wisdom is the principal thing; therefore get wisdom. And in all your getting, get understanding."
   </p>
   <div class="session-cta">
-    <a href="#join" class="btn-gold">Reserve Your Spot</a>
+    <a href="contact.html" class="btn-gold">Reserve Your Spot</a>
     <!-- <div class="session-access">Access to all past sessions included</div> -->
   </div>
 </section>
@@ -2304,7 +2369,7 @@ Sessions are held monthly. The exact date, time, and location will be communicat
     </p>
   </div>
   <form class="join-form" id="joinForm">
-    <div class="form-row">
+    <!-- <div class="form-row">
       <input type="text" class="form-input" placeholder="First Name" required>
       <input type="text" class="form-input" placeholder="Last Name" required>
     </div>
@@ -2317,10 +2382,10 @@ Sessions are held monthly. The exact date, time, and location will be communicat
       <option value="physical">Physical Book - $49</option>
       <option value="digital">Digital Book - $29</option>
       <option value="both">Both Formats - $69</option>
-    </select>
+    </select>jjjjj
     <div class="form-note">
       By joining, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. You can unsubscribe at any time.
-    </div>
+    </div> -->
     <button type="submit" class="submit-btn">Start Your Journey</button>
   </form>
 </div>
